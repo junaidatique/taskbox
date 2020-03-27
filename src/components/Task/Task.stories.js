@@ -1,11 +1,13 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
+import { withKnobs, object } from '@storybook/addon-knobs/react';
 
 import Task from './Task'
 
 export default {
   component: Task,
   title: 'Task',
+  decorators: [withKnobs],
   excludeStories: /.*Data$/
 }
 
@@ -21,7 +23,9 @@ export const actionsData = {
   onArchiveTask: action('onArchiveTask')
 }
 
-export const Default = () => <Task task={{ ...taskData }} {...actionsData} />;
+export const Default = () => {
+  return <Task task={object('task', { ...taskData })} {...actionsData} />;
+};
 
 export const Pinned = () => (
   <Task task={{ ...taskData, state: 'TASK_PINNED' }} {...actionsData} />
